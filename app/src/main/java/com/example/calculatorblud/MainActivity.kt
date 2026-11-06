@@ -35,10 +35,27 @@ fun TipCalcScreen() {
 
 }
 
-// Отдельная функция для радиокнопок, чтобы не загромождать основной код
+
 @Composable
 fun RadioGroup(discountPercent: Int) {
-
+    Column {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = discountPercent == 3, onClick = null)
+            Text("3% (1-2 блюда)")
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = discountPercent == 5, onClick = null)
+            Text("5% (3-5 блюд)")
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = discountPercent == 7, onClick = null)
+            Text("7% (6-10 блюд)")
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            RadioButton(selected = discountPercent == 10, onClick = null)
+            Text("10% (более 10 блюд)")
+        }
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
