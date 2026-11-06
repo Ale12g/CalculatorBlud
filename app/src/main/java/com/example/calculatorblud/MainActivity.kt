@@ -31,14 +31,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipCalcScreen() {
-    // 1. Состояния для ввода данных
     var billAmount by remember { mutableStateOf("") }
     var dishCount by remember { mutableStateOf("") }
 
-    // 2. Состояние слайдера (от 0 до 25)
     var tipPercent by remember { mutableFloatStateOf(0f) }
 
-    // 3. Логика расчета скидки (Пункт 5 методички)
     val dishes = dishCount.toIntOrNull() ?: 0
     val discountPercent = when {
         dishes in 1..2 -> 3
@@ -48,7 +45,55 @@ fun TipCalcScreen() {
         else -> 0
     }
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text("Калькулятор чаевых", fontSize = 24.sp, style = MaterialTheme.typography.headlineMedium)
+        Spacer(modifier = Modifier.height(24.dp))
 
+
+        TextField(
+            value = billAmount,
+            onValueChange = { billAmount = it },
+            label = { Text("Сумма счета") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+        TextField(
+            value = dishCount,
+            onValueChange = { dishCount = it },
+            label = { Text("Количество блюд") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+
+
+        Text("Процент чаевых: ${tipPercent.toInt()}%", fontSize = 18.sp)
+        Slider(
+            value = tipPercent,
+            onValueChange = { tipPercent = it },
+            valueRange = 0f..25f,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text("Текущая скидка:", fontSize = 18.sp, style = MaterialTheme.typography.titleMedium)
+        Spacer(modifier = Modifier.height(8.dp))
+
+        RadioGroup(discountPercent = discountPercent)
+        Spacer(modifier = Modifier.height(32.dp))
+
+
+        //Text("Сумма к оплате: ${tipPercent.toInt()}%", fontSize = 20.sp, color = MaterialTheme.colorScheme.primary)
+    }
 }
 
 
