@@ -31,6 +31,22 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TipCalcScreen() {
+    // 1. Состояния для ввода данных
+    var billAmount by remember { mutableStateOf("") }
+    var dishCount by remember { mutableStateOf("") }
+
+    // 2. Состояние слайдера (от 0 до 25)
+    var tipPercent by remember { mutableFloatStateOf(0f) }
+
+    // 3. Логика расчета скидки (Пункт 5 методички)
+    val dishes = dishCount.toIntOrNull() ?: 0
+    val discountPercent = when {
+        dishes in 1..2 -> 3
+        dishes in 3..5 -> 5
+        dishes in 6..10 -> 7
+        dishes > 10 -> 10
+        else -> 0
+    }
 
 
 }
